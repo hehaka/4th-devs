@@ -6,3 +6,4 @@ translated/
 vault/
 .env
 .claude/settings.json
+.obsidian
