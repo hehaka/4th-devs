@@ -53,6 +53,14 @@ REPLICATE_API_TOKEN=your_replicate_token_here
 
 For image-generation examples, `OPENROUTER_API_KEY` can be used as the image backend with `google/gemini-3.1-flash-image-preview`. `GEMINI_API_KEY` remains the native fallback, and some media examples still need it for native Gemini-only features.
 
+Lesson 08 (graph agents) requires a running Neo4j 5.11+ instance:
+
+```bash
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=password
+```
+
 Some Lesson 05 examples also require:
 
 ```bash
@@ -115,6 +123,7 @@ npm run lesson3:install
 | `01_04_image_guidance` | `npm run lesson4:image_guidance` | Pose-guided image generation from JSON templates |
 | `01_04_json_image` | `npm run lesson4:json_image` | Token-efficient image generation from JSON prompts |
 | `01_04_image_editing` | `npm run lesson4:image_editing` | Iterative image generation and editing with quality checks |
+| `01_04_sprites` | `npm run lesson4:sprites` | Parallel isometric sprite-set generation from JSON templates |
 | `01_04_image_recognition` | `npm run lesson4:image_recognition` | Vision-based image classification with MCP file operations |
 
 Install dependencies:
@@ -144,3 +153,47 @@ npm run lesson5:agent:db:seed
 ```
 
 The agent server starts on `http://127.0.0.1:3000` by default. The seed script creates a bearer token `0f47acce-3aa7-4b58-9389-21b2940ecc70` for authentication. You can override the port and other settings via `01_05_agent/.env` (local keys take priority over the root `.env`).
+
+## Lesson 06
+
+| Example | Run | Description |
+|---------|-----|-------------|
+| `02_01_agentic_rag` | `npm run lesson6:agentic_rag` | Agentic RAG with multi-step retrieval and conversation history |
+
+Install dependencies:
+
+```bash
+npm run lesson6:install
+```
+
+## Lesson 07
+
+| Example | Run | Description |
+|---------|-----|-------------|
+| `02_02_chunking` | `npm run lesson7:chunking` | Four text chunking strategies compared side-by-side |
+| `02_02_embedding` | `npm run lesson7:embedding` | Interactive embedding demo with a pairwise similarity matrix |
+| `02_02_hybrid_rag` | `npm run lesson7:hybrid_rag` | Hybrid RAG agent with SQLite FTS5 full-text search and sqlite-vec vector similarity |
+
+Install dependencies:
+
+```bash
+npm run lesson7:install
+```
+
+## Lesson 08
+
+| Example | Run | Description |
+|---------|-----|-------------|
+| `02_03_graph_agents` | `npm run lesson8:graph_agents` | Graph RAG agent with Neo4j knowledge graph, hybrid search, and entity exploration |
+
+Install dependencies:
+
+```bash
+npm run lesson8:install
+```
+
+Requires a running Neo4j 5.11+ instance (needed for vector index support):
+
+```bash
+docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH=neo4j/password neo4j:5
+```

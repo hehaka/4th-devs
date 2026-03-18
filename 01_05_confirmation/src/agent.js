@@ -86,14 +86,13 @@ const runTools = async (mcpClient, toolCalls, confirmTool) => {
  * @param {array} options.mcpTools - Available MCP tools
  * @param {array} options.conversationHistory - Previous messages (for follow-ups)
  * @param {function} options.confirmTool - Callback for tool confirmation (toolName, args) => Promise<boolean>
- * @returns {object} { response, toolCalls, conversationHistory }
+ * @returns {object} { response, conversationHistory }
  */
 export const run = async (query, { mcpClient, mcpTools, conversationHistory = [], confirmTool }) => {
   const tools = [...mcpToolsToOpenAI(mcpTools), ...nativeTools];
   
   // Start with existing history or empty array
   const messages = [...conversationHistory, { role: "user", content: query }];
-  const toolCallHistory = [];
 
   log.query(query);
 
@@ -113,16 +112,11 @@ export const run = async (query, { mcpClient, mcpTools, conversationHistory = []
       
       return { 
         response: text, 
-        toolCalls: toolCallHistory,
         conversationHistory: messages
       };
     }
 
     messages.push(...response.output);
-
-    for (const tc of toolCalls) {
-      toolCallHistory.push({ name: tc.name, arguments: JSON.parse(tc.arguments) });
-    }
 
     const results = await runTools(mcpClient, toolCalls, confirmTool);
     messages.push(...results);
